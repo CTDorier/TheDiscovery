@@ -35899,54 +35899,6 @@ __decorate12([
   property.float(0.9)
 ], OrbitalCamera.prototype, "damping", void 0);
 
-// js/gameplay/beehive-piece.js
-var BeehivePiece = class extends Component {
-  cursor = null;
-  numTaps = 0;
-  wax = [];
-  honey = [];
-  start() {
-    this.collider = this.object.getComponent("collision");
-    this.cursorTarget = this.object.getComponent("cursor-target");
-    this.cursorTarget.addClickFunction(this.onClick.bind(this));
-    for (let i = 0; i < this.object.children.length; i++) {
-      if (this.object.children[i].getComponent("mesh") != null) {
-        let mesh = this.object.children[i].getComponent("mesh");
-        if (mesh.material.pipeline == "Wax Phong Custom") {
-          this.wax.push(this.object.children[i]);
-        } else if (mesh.material.pipeline == "Honey Physical Custom") {
-          this.honey.push(this.object.children[i]);
-        } else {
-          console.error("BeehivePiece Error: invalid material detected.");
-        }
-      }
-    }
-  }
-  onClick(object, cursor) {
-    console.log("clicked");
-    this.cursor = cursor;
-    this.numTaps++;
-    if (this.numTaps == 1) {
-      for (let i = 0; i < this.wax.length; i++) {
-        this.wax[i].active = false;
-      }
-    } else if (this.numTaps == 2) {
-      for (let i = 0; i < this.honey.length; i++) {
-        this.honey[i].active = false;
-      }
-      this.collider.active = false;
-      this.cursorTarget.removeClickFunction(this.onClick.bind(this));
-    } else {
-      console.error("BeehivePiece Error: invalid number of taps.");
-      return;
-    }
-  }
-  update(dt) {
-  }
-};
-__publicField(BeehivePiece, "TypeName", "beehive-piece");
-__publicField(BeehivePiece, "Properties", {});
-
 // js/gameplay/nut-cracker.js
 var NutCracker = class extends Component {
   sample = null;
@@ -39867,7 +39819,6 @@ if (document.readyState === "loading") {
 }
 engine.registerComponent(CursorTarget);
 engine.registerComponent(TargetFramerate);
-engine.registerComponent(BeehivePiece);
 engine.registerComponent(NutCracker);
 engine.registerComponent(ProgressManager);
 engine.registerComponent(SoilGameplay);
